@@ -106,5 +106,27 @@ pip install -r requirements.txt
 playwright install
 ```
 
-5. 
- 
+### Automation execution flow
+
+![Execution Flow Diagram](data/executionflow.jpg)
+
+**Entry** — `pytest.ini` + CLI command bootstraps the run with markers, workers, and output settings.
+
+**conftest.py** — the central hub that registers all fixtures and hooks before any test touches the browser.
+
+**Fixtures** — `browser_fixture.py` spins up the Playwright browser/context, while `page_fixture.py` creates a fresh page object per test.
+
+**Config** — `environments.py` feeds base URLs, `constants.py` holds shared values, `settings.py` controls timeouts and retry counts — all injected via fixtures.
+
+**Base Page** — `base_page.py` is the POM foundation. Every page-specific class inherits from it, giving uniform `navigate()`, `wait_for_element()`, etc.
+
+**Components** — reusable UI building blocks (`header`, `modal`, `table`, `dropdown`, `sidebar`) are consumed by page objects, keeping selectors DRY.
+
+**Utils** — cross-cutting helpers: `waits.py` for smart dynamic waits, `assertions.py` for custom checks, `retry.py` for flaky-test resilience, `logger.py` for structured output.
+
+**Test suites** — four tiers: `smoke` (post-deploy health), `sanity` (critical paths), `regression` (defect coverage), `e2e` (full user journeys).
+
+**Execution engine** — pytest runs them in parallel workers with marker-based filtering and rerun-on-failure.
+
+**Artifacts** — screenshots on failure, Playwright trace files for debugging, and HTML reports all feed the final CI/CD pipeline result.
+
