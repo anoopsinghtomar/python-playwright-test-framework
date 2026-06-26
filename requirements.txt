@@ -1,0 +1,19 @@
+# Core Testing
+playwright==1.54.0
+pytest==8.4.1
+pytest-playwright==0.7.0
+
+# Reporting
+pytest-html==4.1.1
+pytest-xdist==3.8.0
+allure-pytest==2.15.0
+
+# Utilities
+python-dotenv==1.1.1
+faker==37.5.3
+
+# Data & Validation
+pydantic==2.8.2
+
+# Logging & Helpers (optional but stable)
+requests>=2.32.0
